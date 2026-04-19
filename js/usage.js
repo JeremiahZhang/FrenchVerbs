@@ -629,5 +629,11 @@ const usageInfo = {
     "déménager 是第一组动词，在某些变位中需要特殊处理重音符号",
     "déménager 常用于表达搬家到新地方",
     "例句：Je déménage demain. (我明天搬家)"
+  ],
+  "vivre": [
+    "vivre 表示'生活'、'生存'、'居住'等含义",
+    "vivre 是第三组不规则动词，过去分词是 vécu",
+    "vivre 常用于表达生活、居住在某地",
+    "例句：Je vis à Paris. (我住在巴黎)"
   ]
 };

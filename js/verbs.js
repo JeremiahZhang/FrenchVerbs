@@ -101,7 +101,8 @@ const verbs = [
   { id: 99, french: "vouloir", chinese: "想要", example: "Je veux le savoir.", exampleZh: "我想要知道。", type: "re", irregular: true },
   { id: 100, french: "voyager", chinese: "旅行", example: "Je voyage en train.", exampleZh: "我搭火车旅行。", type: "er", irregular: false },
   { id: 104, french: "visiter", chinese: "参观;访问", example: "Je visite Paris.", exampleZh: "我参观巴黎。", type: "er", irregular: false },
-  { id: 105, french: "déménager", chinese: "搬家", example: "Je déménage demain.", exampleZh: "我明天搬家。", type: "er", irregular: false }
+  { id: 105, french: "déménager", chinese: "搬家", example: "Je déménage demain.", exampleZh: "我明天搬家。", type: "er", irregular: false },
+  { id: 106, french: "vivre", chinese: "生活;生存", example: "Je vis à Paris.", exampleZh: "我住在巴黎。", type: "re", irregular: true }
 ];
 
 // 添加 être 和 avoir（最常用的两个动词）
