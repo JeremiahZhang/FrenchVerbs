@@ -115,6 +115,7 @@
         <div class="verb-number">#${verb.id}</div>
         <div class="verb-header">
           <div class="verb-french">${verb.french}</div>
+          <button class="speak-btn" data-verb="${verb.french}" title="发音">🔊</button>
         </div>
         <div class="verb-chinese">${verb.chinese}</div>
         <div class="verb-example">${verb.example}</div>
@@ -122,12 +123,31 @@
         <div class="verb-type">${verb.irregular ? '⚡ 不规则' : '✓ 规则'} · ${verb.type}</div>
       `;
 
+      // 点击发音按钮
+      const speakBtn = card.querySelector('.speak-btn');
+      speakBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // 阻止事件冒泡，避免跳转到详情页
+        speakText(verb.french);
+      });
+
       // 点击卡片跳转到详情页
       card.addEventListener('click', () => {
         window.location.href = `verb-detail.html?verb=${verb.french}`;
       });
 
       return card;
+    }
+
+    // 发音功能
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'fr-FR'; // 设置为法语
+        utterance.rate = 0.9; // 语速稍慢，更清晰
+        speechSynthesis.speak(utterance);
+      } else {
+        alert('您的浏览器不支持语音合成功能');
+      }
     }
 
     // 渲染动词网格

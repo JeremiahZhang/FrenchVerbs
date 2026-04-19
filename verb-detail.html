@@ -98,6 +98,13 @@
       document.getElementById('verbExample').textContent = verb.example;
       document.getElementById('verbExampleZh').textContent = verb.exampleZh;
 
+      // 添加发音按钮
+      const speakBtn = document.createElement('button');
+      speakBtn.className = 'speak-btn-large';
+      speakBtn.textContent = '🔊 发音';
+      speakBtn.onclick = () => speakText(verb.french);
+      document.querySelector('.verb-header').appendChild(speakBtn);
+
       // 渲染变位表
       renderConjugation(verbName);
 
@@ -106,6 +113,18 @@
 
       // 渲染使用说明
       renderUsage(verbName);
+    }
+
+    // 发音功能
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'fr-FR'; // 设置为法语
+        utterance.rate = 0.9; // 语速稍慢，更清晰
+        speechSynthesis.speak(utterance);
+      } else {
+        alert('您的浏览器不支持语音合成功能');
+      }
     }
 
     // 渲染变位表
@@ -131,9 +150,17 @@
         item.innerHTML = `
           <span class="pronoun">${pronoun}</span>
           <span class="verb-form">${form}</span>
+          <button class="speak-btn-small" data-form="${form}" title="发音">🔊</button>
         `;
         grid.appendChild(item);
       }
+
+      // 为每个发音按钮添加事件
+      document.querySelectorAll('.speak-btn-small').forEach(btn => {
+        btn.addEventListener('click', () => {
+          speakText(btn.dataset.form);
+        });
+      });
 
       document.getElementById('tenseTitle').textContent = tenseNames[currentTense];
     }
@@ -155,9 +182,17 @@
         item.innerHTML = `
           <div class="participle-label">${label === 'présent' ? '现在分词' : '过去分词'}</div>
           <div class="participle-value">${value}</div>
+          <button class="speak-btn-small" data-form="${value}" title="发音">🔊</button>
         `;
         grid.appendChild(item);
       }
+
+      // 为每个发音按钮添加事件
+      document.querySelectorAll('.speak-btn-small').forEach(btn => {
+        btn.addEventListener('click', () => {
+          speakText(btn.dataset.form);
+        });
+      });
     }
 
     // 渲染使用说明
