@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动词变位 | French Verb Conjugation</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/verb-detail.css">
+</head>
+<body>
+  <div class="verb-detail-container">
+    <!-- 动词头部 -->
+    <div class="verb-header">
+      <h1 class="verb-title" id="verbTitle">加载中...</h1>
+      <div class="verb-meaning" id="verbMeaning"></div>
+      <div class="verb-example" id="verbExample"></div>
+      <div class="verb-example-zh" id="verbExampleZh"></div>
+      <a href="index.html" class="back-button">← 返回动词列表</a>
+    </div>
+
+    <!-- 时态标签 -->
+    <div class="tense-tabs" id="tenseTabs">
+      <button class="tense-tab active" data-tense="present">现在时 (Présent)</button>
+      <button class="tense-tab" data-tense="imparfait">未完成过去时 (Imparfait)</button>
+      <button class="tense-tab" data-tense="passe_compose">复合过去时 (Passé Composé)</button>
+      <button class="tense-tab" data-tense="futur_simple">简单将来时 (Futur Simple)</button>
+      <button class="tense-tab" data-tense="conditionnel">条件式 (Conditionnel)</button>
+      <button class="tense-tab" data-tense="subjonctif">虚拟式 (Subjonctif)</button>
+      <button class="tense-tab" data-tense="imperatif">命令式 (Impératif)</button>
+    </div>
+
+    <!-- 变位表 -->
+    <div class="conjugation-table" id="conjugationTable">
+      <h2 class="tense-title" id="tenseTitle">现在时 (Présent)</h2>
+      <div class="conjugation-grid" id="conjugationGrid">
+        <!-- 变位将通过 JavaScript 动态生成 -->
+      </div>
+    </div>
+
+    <!-- 分词 -->
+    <div class="participle-section">
+      <h2 class="tense-title">分词 (Participe)</h2>
+      <div class="participle-grid" id="participleGrid">
+        <!-- 分词将通过 JavaScript 动态生成 -->
+      </div>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="usage-section">
+      <h2 class="usage-title">使用说明</h2>
+      <ul class="usage-list" id="usageList">
+        <!-- 使用说明将通过 JavaScript 动态生成 -->
+      </ul>
+    </div>
+  </div>
+
+  <script src="js/verbs.js"></script>
+  <script src="js/conjugations.js"></script>
+  <script src="js/usage.js"></script>
+  <script>
+    // 获取 URL 参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const verbName = urlParams.get('verb');
+
+    // 时态名称映射
+    const tenseNames = {
+      present: '现在时 (Présent)',
+      imparfait: '未完成过去时 (Imparfait)',
+      passe_compose: '复合过去时 (Passé Composé)',
+      futur_simple: '简单将来时 (Futur Simple)',
+      conditionnel: '条件式 (Conditionnel)',
+      subjonctif: '虚拟式 (Subjonctif)',
+      imperatif: '命令式 (Impératif)'
+    };
+
+    // 使用说明数据已移至 js/usage.js
+
+    // 当前选中的时态
+    let currentTense = 'present';
+
+    // 初始化页面
+    function initPage() {
+      if (!verbName) {
+        document.getElementById('verbTitle').textContent = '未指定动词';
+        return;
+      }
+
+      // 查找动词信息
+      const verb = allVerbs.find(v => v.french.toLowerCase() === verbName.toLowerCase());
+      if (!verb) {
+        document.getElementById('verbTitle').textContent = '未找到动词';
+        return;
+      }
+
+      // 设置动词信息
+      document.getElementById('verbTitle').textContent = verb.french;
+      document.getElementById('verbMeaning').textContent = verb.chinese;
+      document.getElementById('verbExample').textContent = verb.example;
+      document.getElementById('verbExampleZh').textContent = verb.exampleZh;
+
+      // 渲染变位表
+      renderConjugation(verbName);
+
+      // 渲染分词
+      renderParticiple(verbName);
+
+      // 渲染使用说明
+      renderUsage(verbName);
+    }
+
+    // 渲染变位表
+    function renderConjugation(verbName) {
+      const conjugation = conjugations[verbName];
+      if (!conjugation) {
+        document.getElementById('conjugationGrid').innerHTML = '<p>暂无变位数据</p>';
+        return;
+      }
+
+      const tenseData = conjugation[currentTense];
+      if (!tenseData) {
+        document.getElementById('conjugationGrid').innerHTML = '<p>此时态暂无数据</p>';
+        return;
+      }
+
+      const grid = document.getElementById('conjugationGrid');
+      grid.innerHTML = '';
+
+      for (const [pronoun, form] of Object.entries(tenseData)) {
+        const item = document.createElement('div');
+        item.className = 'conjugation-item';
+        item.innerHTML = `
+          <span class="pronoun">${pronoun}</span>
+          <span class="verb-form">${form}</span>
+        `;
+        grid.appendChild(item);
+      }
+
+      document.getElementById('tenseTitle').textContent = tenseNames[currentTense];
+    }
+
+    // 渲染分词
+    function renderParticiple(verbName) {
+      const conjugation = conjugations[verbName];
+      if (!conjugation || !conjugation.participe) {
+        document.getElementById('participleGrid').innerHTML = '<p>暂无分词数据</p>';
+        return;
+      }
+
+      const grid = document.getElementById('participleGrid');
+      grid.innerHTML = '';
+
+      for (const [label, value] of Object.entries(conjugation.participe)) {
+        const item = document.createElement('div');
+        item.className = 'participle-item';
+        item.innerHTML = `
+          <div class="participle-label">${label === 'présent' ? '现在分词' : '过去分词'}</div>
+          <div class="participle-value">${value}</div>
+        `;
+        grid.appendChild(item);
+      }
+    }
+
+    // 渲染使用说明
+    function renderUsage(verbName) {
+      const usage = usageInfo[verbName];
+      if (!usage) {
+        document.getElementById('usageList').innerHTML = '<li class="usage-item"><span class="usage-text">暂无使用说明</span></li>';
+        return;
+      }
+
+      const list = document.getElementById('usageList');
+      list.innerHTML = '';
+
+      usage.forEach(text => {
+        const item = document.createElement('li');
+        item.className = 'usage-item';
+        item.innerHTML = `
+          <span class="usage-bullet"></span>
+          <span class="usage-text">${text}</span>
+        `;
+        list.appendChild(item);
+      });
+    }
+
+    // 时态标签点击事件
+    document.querySelectorAll('.tense-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // 移除所有标签的 active 类
+        document.querySelectorAll('.tense-tab').forEach(t => t.classList.remove('active'));
+        // 添加当前标签的 active 类
+        tab.classList.add('active');
+
+        // 更新当前时态
+        currentTense = tab.dataset.tense;
+
+        // 重新渲染变位表
+        renderConjugation(verbName);
+      });
+    });
+
+    // 初始化
+    initPage();
+  </script>
+</body>
+</html>

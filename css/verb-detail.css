@@ -1,0 +1,343 @@
+/* 动词详情页样式 - 优化版 */
+.verb-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.verb-header {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.verb-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.verb-meaning {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.verb-example {
+  font-size: 1.1rem;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.verb-example-zh {
+  font-size: 1rem;
+  color: #888;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: #764ba2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* 时态标签 */
+.tense-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.tense-tab {
+  padding: 12px 24px;
+  border: 2px solid #667eea;
+  background: white;
+  color: #667eea;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tense-tab:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.tense-tab.active {
+  background: #667eea;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* 变位表卡片 */
+.conjugation-table {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.tense-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #667eea;
+}
+
+.conjugation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.conjugation-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.conjugation-item:hover {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  transform: translateX(5px);
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.pronoun {
+  font-weight: 600;
+  color: #495057;
+  font-size: 1.05rem;
+}
+
+.verb-form {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 1.3rem;
+  text-shadow: 0 1px 2px rgba(102, 126, 234, 0.1);
+}
+
+/* 分词 */
+.participle-section {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.participle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.participle-item {
+  padding: 25px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.participle-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  transform: translateY(-3px);
+}
+
+.participle-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.participle-value {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 1.6rem;
+  text-shadow: 0 1px 2px rgba(102, 126, 234, 0.1);
+}
+
+/* 使用说明 */
+.usage-section {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.usage-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #667eea;
+}
+
+.usage-list {
+  list-style: none;
+  padding: 0;
+}
+
+.usage-item {
+  padding: 18px 0;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: flex-start;
+  transition: all 0.3s ease;
+}
+
+.usage-item:hover {
+  background: #f8f9fa;
+  padding-left: 10px;
+  border-radius: 8px;
+}
+
+.usage-item:last-child {
+  border-bottom: none;
+}
+
+.usage-bullet {
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  margin-right: 18px;
+  margin-top: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.usage-text {
+  color: #495057;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .verb-detail-container {
+    padding: 20px 10px;
+  }
+
+  .verb-title {
+    font-size: 2rem;
+  }
+
+  .verb-meaning {
+    font-size: 1.2rem;
+  }
+
+  .conjugation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tense-tabs {
+    flex-direction: column;
+  }
+
+  .tense-tab {
+    width: 100%;
+    text-align: center;
+  }
+
+  .conjugation-table,
+  .participle-section,
+  .usage-section {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .verb-header {
+    padding: 30px 20px;
+  }
+
+  .verb-title {
+    font-size: 1.8rem;
+  }
+
+  .conjugation-item {
+    padding: 15px 18px;
+  }
+
+  .pronoun {
+    font-size: 0.95rem;
+  }
+
+  .verb-form {
+    font-size: 1.1rem;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .verb-detail-container {
+    background: white;
+    padding: 0;
+  }
+
+  .verb-header {
+    background: white;
+    color: black;
+    box-shadow: none;
+    border-bottom: 2px solid #333;
+  }
+
+  .back-button {
+    display: none;
+  }
+
+  .tense-tabs {
+    display: none;
+  }
+
+  .conjugation-table,
+  .participle-section,
+  .usage-section {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 2px solid #ccc;
+  }
+
+  .conjugation-item,
+  .participle-item {
+    background: white;
+    border: 1px solid #ddd;
+  }
+}

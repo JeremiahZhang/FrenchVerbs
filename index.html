@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100个最常用法语动词 | French Verbs</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <header>
+      <h1>🇫🇷 100个最常用法语动词</h1>
+      <p>Les 100 verbes les plus utilisés en français</p>
+    </header>
+
+    <!-- 统计信息 -->
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number" id="totalVerbs">0</div>
+        <div class="stat-label">总动词数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="irregularVerbs">0</div>
+        <div class="stat-label">不规则动词</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="regularVerbs">0</div>
+        <div class="stat-label">规则动词</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="displayedVerbs">0</div>
+        <div class="stat-label">当前显示</div>
+      </div>
+    </div>
+
+    <!-- 搜索和筛选 -->
+    <div class="search-filter">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 搜索动词（法语或中文）...">
+      </div>
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">全部</button>
+        <button class="filter-btn" data-filter="er">第一组 (-er)</button>
+        <button class="filter-btn" data-filter="ir">第二组 (-ir)</button>
+        <button class="filter-btn" data-filter="re">第三组 (-re)</button>
+        <button class="filter-btn" data-filter="pronominal">代词式动词</button>
+        <button class="filter-btn" data-filter="irregular">不规则动词</button>
+        <button class="filter-btn" data-filter="regular">规则动词</button>
+      </div>
+    </div>
+
+    <!-- 动词网格 -->
+    <div class="verbs-grid" id="verbsGrid">
+      <!-- 动词卡片将通过 JavaScript 动态生成 -->
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+      <p>💪 每天学习，每天进步 | Bonne chance!</p>
+    </footer>
+  </div>
+
+  <script src="js/verbs.js"></script>
+  <script>
+    // 获取 DOM 元素
+    const verbsGrid = document.getElementById('verbsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    // 当前筛选状态
+    let currentFilter = 'all';
+    let searchTerm = '';
+
+    // 更新统计信息
+    function updateStats() {
+      const total = allVerbs.length;
+      const irregular = allVerbs.filter(v => v.irregular).length;
+      const regular = total - irregular;
+      const displayed = getFilteredVerbs().length;
+
+      document.getElementById('totalVerbs').textContent = total;
+      document.getElementById('irregularVerbs').textContent = irregular;
+      document.getElementById('regularVerbs').textContent = regular;
+      document.getElementById('displayedVerbs').textContent = displayed;
+    }
+
+    // 获取筛选后的动词列表
+    function getFilteredVerbs() {
+      return allVerbs.filter(verb => {
+        // 搜索过滤
+        const matchesSearch = searchTerm === '' ||
+          verb.french.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          verb.chinese.includes(searchTerm);
+
+        // 类型过滤
+        let matchesFilter = true;
+        if (currentFilter === 'irregular') {
+          matchesFilter = verb.irregular;
+        } else if (currentFilter === 'regular') {
+          matchesFilter = !verb.irregular;
+        } else if (currentFilter !== 'all') {
+          matchesFilter = verb.type === currentFilter;
+        }
+
+        return matchesSearch && matchesFilter;
+      });
+    }
+
+    // 创建动词卡片
+    function createVerbCard(verb) {
+      const card = document.createElement('div');
+      card.className = `verb-card ${verb.irregular ? 'irregular' : ''}`;
+      card.innerHTML = `
+        <div class="verb-number">#${verb.id}</div>
+        <div class="verb-header">
+          <div class="verb-french">${verb.french}</div>
+        </div>
+        <div class="verb-chinese">${verb.chinese}</div>
+        <div class="verb-example">${verb.example}</div>
+        <div class="verb-example-zh">${verb.exampleZh}</div>
+        <div class="verb-type">${verb.irregular ? '⚡ 不规则' : '✓ 规则'} · ${verb.type}</div>
+      `;
+
+      // 点击卡片跳转到详情页
+      card.addEventListener('click', () => {
+        window.location.href = `verb-detail.html?verb=${verb.french}`;
+      });
+
+      return card;
+    }
+
+    // 渲染动词网格
+    function renderVerbs() {
+      const filteredVerbs = getFilteredVerbs();
+      verbsGrid.innerHTML = '';
+
+      if (filteredVerbs.length === 0) {
+        verbsGrid.innerHTML = '<p style="text-align: center; color: #666; grid-column: 1/-1; padding: 40px;">没有找到匹配的动词 😢</p>';
+        return;
+      }
+
+      filteredVerbs.forEach(verb => {
+        const card = createVerbCard(verb);
+        verbsGrid.appendChild(card);
+      });
+
+      updateStats();
+    }
+
+    // 搜索输入事件
+    searchInput.addEventListener('input', (e) => {
+      searchTerm = e.target.value;
+      renderVerbs();
+    });
+
+    // 筛选按钮事件
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 移除所有按钮的 active 类
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // 添加当前按钮的 active 类
+        button.classList.add('active');
+
+        // 更新当前筛选
+        currentFilter = button.dataset.filter;
+        renderVerbs();
+      });
+    });
+
+    // 初始化
+    renderVerbs();
+  </script>
+</body>
+</html>
